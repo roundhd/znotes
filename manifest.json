@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "YT Transcript Sync",
+  "version": "1.0.0",
+  "description": "Syncs transcription with YouTube playback.",
+  "permissions": [
+    "sidePanel",
+    "activeTab",
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://*.youtube.com/*"
+  ],
+  "side_panel": {
+    "default_path": "index.html"
+  },
+  "background": {
+    "service_worker": "background.ts"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.youtube.com/watch*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "Open Transcript"
+  }
+}

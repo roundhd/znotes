@@ -1,0 +1,5 @@
+{
+  "name": "YT Transcript Sync",
+  "description": "A side-panel extension for YouTube that syncs transcription with video playback time.",
+  "requestFramePermissions": []
+}
