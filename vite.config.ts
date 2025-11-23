@@ -1,23 +1,36 @@
-import path from 'path';
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { resolve, dirname } from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
 
-export default defineConfig(({ mode }) => {
-    const env = loadEnv(mode, '.', '');
-    return {
-      server: {
-        port: 3000,
-        host: '0.0.0.0',
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Plugin to copy manifest.json to dist directory during build
+const copyManifest = () => {
+  return {
+    name: 'copy-manifest',
+    closeBundle() {
+      fs.copyFileSync('manifest.json', 'dist/manifest.json');
+    }
+  };
+};
+
+export default defineConfig({
+  plugins: [react(), copyManifest()],
+  build: {
+    rollupOptions: {
+      input: {
+        index: resolve(__dirname, 'index.html'),
+        background: resolve(__dirname, 'background.ts'),
+        content: resolve(__dirname, 'content.ts'),
       },
-      plugins: [react()],
-      define: {
-        'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-        'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
-      },
-      resolve: {
-        alias: {
-          '@': path.resolve(__dirname, '.'),
-        }
+      output: {
+        entryFileNames: '[name].js',
       }
-    };
+    },
+    outDir: 'dist',
+    emptyOutDir: true
+  }
 });

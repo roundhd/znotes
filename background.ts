@@ -1,3 +1,5 @@
+export {}; // Treat as module to avoid global scope conflict
+
 declare const chrome: any;
 
 // Allows users to open the side panel by clicking the action toolbar icon

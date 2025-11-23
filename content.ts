@@ -3,6 +3,8 @@
  * It listens for video time updates and sends them to the extension side panel.
  */
 
+export {}; // Treat as module to avoid global scope conflict
+
 declare const chrome: any;
 
 let videoElement: HTMLVideoElement | null = null;

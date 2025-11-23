@@ -16,7 +16,7 @@
     "default_path": "index.html"
   },
   "background": {
-    "service_worker": "background.ts"
+    "service_worker": "background.js"
   },
   "content_scripts": [
     {
